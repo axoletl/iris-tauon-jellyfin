@@ -11,7 +11,7 @@ services:
       - ./data/config:/config
       - ./data/cache:/cache
       - type: bind
-        source: ./data/music
+        source: ./data/music:ro
         target: /music
       # Optional - extra fonts to be used during transcoding with subtitle burn-in
       # - type: bind
@@ -29,7 +29,7 @@ services:
     image: cloudflare/cloudflared
     container_name: jellyfin_cloudflared
     env_file: '.env_docker'
-    hostname: calibarn-jelly
+    hostname: barbatos-jelly
     restart: 'unless-stopped'
     logging:
       driver: 'json-file'
