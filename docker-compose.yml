@@ -11,8 +11,9 @@ services:
       - ./data/config:/config
       - ./data/cache:/cache
       - type: bind
-        source: ./data/music:ro
+        source: ./data/music
         target: /music
+        read_only: true
       # Optional - extra fonts to be used during transcoding with subtitle burn-in
       # - type: bind
       #   source: ./data/fonts
