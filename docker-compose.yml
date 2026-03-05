@@ -14,15 +14,9 @@ services:
         source: ./data/music
         target: /music
         read_only: true
-      # Optional - extra fonts to be used during transcoding with subtitle burn-in
-      # - type: bind
-      #   source: ./data/fonts
-      #   target: /usr/local/share/fonts/custom
-      #   read_only: true
+      networks:
+        - jelly
     restart: 'unless-stopped'
-    # Optional - alternative address used for autodiscovery
-    # environment:
-    #   - JELLYFIN_PublishedServerUrl=http://example.com
     # Optional - may be necessary for docker healthcheck to pass if running in host network mode
     extra_hosts:
       - 'host.docker.internal:host-gateway'
@@ -32,12 +26,13 @@ services:
     env_file: '.env_docker'
     hostname: barbatos-jelly
     restart: 'unless-stopped'
+    networks:
+      - jelly
     logging:
       driver: 'json-file'
       options:
         max-size: '100m'
         max-file: '10'
-    network_mode: 'host'
     command: tunnel run
     # Health check configuration to verify Cloudflare Tunnel readiness
     healthcheck:
@@ -49,3 +44,9 @@ services:
     # Container labels for additional metadata
     labels:
       - 'com.centurylinklabs.watchtower.enable=true'  # Enable automatic updates with Watchtower
+
+networks:
+  jelly:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"
