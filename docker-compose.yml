@@ -14,8 +14,8 @@ services:
         source: ./data/music
         target: /music
         read_only: true
-      networks:
-        - jelly
+    networks:
+      - jelly
     restart: 'unless-stopped'
     # Optional - may be necessary for docker healthcheck to pass if running in host network mode
     extra_hosts:
